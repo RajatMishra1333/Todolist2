@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Todo List</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="box">
+      <h1>Todo List</h1>
+
+      <div class="task-list">
+        <% dayej.forEach(item => { %>
+          <div class="task-item">
+            <!-- Checkbox to mark complete -->
+            <input 
+              type="checkbox" 
+              class="task-check" 
+              onchange="this.nextElementSibling.classList.toggle('checked')" 
+            />
+            <span><%= item.name %></span>
+
+            <!-- Edit Form -->
+            <form method="POST" action="/edit/<%= item._id %>">
+              <input 
+                type="text" 
+                name="updatedText" 
+                placeholder="Edit task" 
+                required
+              />
+              <button type="submit">✏️</button>
+            </form>
+
+            <!-- Delete Form -->
+            <form method="POST" action="/delete/<%= item._id %>">
+              <button type="submit">🗑️</button>
+            </form>
+          </div>
+        <% }) %>
+      </div>
+
+      <!-- Add Task -->
+      <form method="POST" action="/" class="add-task">
+        <input type="text" name="hey" placeholder="Enter the task" required />
+        <button type="submit">+</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
