@@ -7,17 +7,14 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// ✅ Connect to MongoDB
 mongoose.connect("mongodb+srv://backendUser:Rajat1333@cluster0.mq1hjpn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
-// ✅ Task Schema & Model
 const taskSchema = new mongoose.Schema({
   name: String,
 });
 const Task = mongoose.model("Task", taskSchema);
 
-// ✅ GET - Home Route
-app.get("/", async (req, res) => {
+app.get("/", async function (req, res) {
   try {
     const tasks = await Task.find();
     res.render("list", { dayej: tasks });
@@ -27,8 +24,7 @@ app.get("/", async (req, res) => {
   }
 });
 
-// ✅ POST - Add Task
-app.post("/", async (req, res) => {
+app.post("/", async function (req, res) {
   const taskName = req.body.hey.trim();
   if (taskName) {
     await Task.create({ name: taskName });
@@ -36,8 +32,7 @@ app.post("/", async (req, res) => {
   res.redirect("/");
 });
 
-// ✅ POST - Delete Task
-app.post("/delete/:id", async (req, res) => {
+app.post("/delete/:id", async function (req, res) {
   try {
     await Task.findByIdAndDelete(req.params.id);
     res.redirect("/");
@@ -47,8 +42,7 @@ app.post("/delete/:id", async (req, res) => {
   }
 });
 
-// ✅ POST - Edit Task
-app.post("/edit/:id", async (req, res) => {
+app.post("/edit/:id", async function (req, res) {
   try {
     const updatedText = req.body.updatedText.trim();
     if (updatedText) {
@@ -61,7 +55,7 @@ app.post("/edit/:id", async (req, res) => {
   }
 });
 
-// ✅ Start Server
-app.listen(3000, () => {
-  console.log("✅ Server running on http://localhost:3000");
+
+app.listen(3000, function () {
+  console.log("Server running on http://localhost:3000");
 });
