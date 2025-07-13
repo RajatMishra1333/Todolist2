@@ -12,18 +12,15 @@
       <h1>Todo List</h1>
 
       <div class="task-list">
-        <% dayej.forEach(item => { %>
+        <% tasks.forEach(item => { %>
           <div class="task-item">
-            <!-- Checkbox to mark complete -->
             <input 
               type="checkbox" 
-              class="task-check" 
               onchange="this.nextElementSibling.classList.toggle('checked')" 
             />
             <span><%= item.name %></span>
 
-            <!-- Edit Form -->
-            <form method="POST" action="/edit/<%= item._id %>">
+            <form method="POST" action="/tasks/<%= item._id %>?_method=PUT">
               <input 
                 type="text" 
                 name="updatedText" 
@@ -33,17 +30,15 @@
               <button type="submit">✏️</button>
             </form>
 
-            <!-- Delete Form -->
-            <form method="POST" action="/delete/<%= item._id %>">
+            <form method="POST" action="/tasks/<%= item._id %>?_method=DELETE">
               <button type="submit">🗑️</button>
             </form>
           </div>
         <% }) %>
       </div>
 
-      <!-- Add Task -->
       <form method="POST" action="/" class="add-task">
-        <input type="text" name="hey" placeholder="Enter the task" required />
+        <input type="text" name="taskName" placeholder="Enter the task" required />
         <button type="submit">+</button>
       </form>
     </div>
